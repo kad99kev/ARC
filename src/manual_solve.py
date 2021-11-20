@@ -5,8 +5,6 @@ import json
 import numpy as np
 import re
 
-from sklearn import neighbors
-
 ### YOUR CODE HERE: write at least three functions which solve
 ### specific tasks by transforming the input x and returning the
 ### result. Name them according to the task ID as in the three
@@ -259,11 +257,122 @@ from sklearn import neighbors
 #     return solution
 
 
-"""
-Questions:
-1. Is it okay to assume certain features or is it considered hardcoded?
-2. Does it have to be optimised?
-"""
+# def solve_d43fd935(x):
+#     """
+#     Search for the larger green cluster and extend any block that \
+#         shares the same row or column with the cluster.
+#     """
+
+#     def extend_rows(x, curr_row, max_c, min_c, black, green):
+#         """
+#         Extend rows based on current row and \
+#             the minimum and maximum column values.
+#         """
+#         row_data = x[curr_row, :]
+#         r_idx = np.where((row_data != black) & (row_data != green))[0]
+#         for idx in r_idx:
+#             colour = x[curr_row, idx]
+#             if idx < min_c:
+#                 x[min_r, idx:min_c] = colour
+#             else:
+#                 x[min_r, max_c + 1 : idx] = colour
+#         return x
+
+#     def extend_cols(x, curr_col, max_r, min_r, black, green):
+#         """
+#         Extend columns based on current column and \
+#             the minimum and maximum row values.
+#         """
+#         col_data = x[:, curr_col]
+#         r_idx = np.where((col_data != black) & (col_data != green))[0]
+#         for idx in r_idx:
+#             colour = x[idx, curr_col]
+#             if idx < min_r:
+#                 x[idx:min_r, curr_col] = colour
+#             else:
+#                 x[max_r + 1 : idx, curr_col] = colour
+#         return x
+
+#     x = x.copy()  # Prevents overwriting input array.
+
+#     green = 3  # Colour for green
+#     black = 0  # Colour for black
+
+#     rows, columns = np.where(x == green)  # Find indices where green is present.
+#     max_r, max_c = max(rows), max(columns)  # Getting the bottom rightmost co-ordinate.
+#     min_r, min_c = max_r - 1, max_c - 1  # Getting the top leftmost co-ordinate.
+
+#     # For rows
+#     x = extend_rows(x, min_r, max_c, min_c, black, green)  # For top row.
+#     x = extend_rows(x, max_r, max_c, min_c, black, green)  # For bottom row.
+
+#     # For columns.
+#     x = extend_cols(x, min_c, max_r, min_r, black, green)  # For left column.
+#     x = extend_cols(x, max_c, max_r, min_r, black, green)  # For right column.
+
+#     return x
+
+
+def solve_681b3aeb(x):
+    """
+    Join two shapes to complete a 3x3 grid.
+    """
+
+    def normalise_large(cords):
+        """
+        Normalise the co-ordinates of the shape.
+        Reduces the shape to a 3x3 grid.
+        """
+        cords = np.array(cords)
+        row_min, col_min = cords.min(axis=0)
+        row_max, col_max = cords.max(axis=0)
+        cords[:, 0] -= row_min
+        cords[:, 1] -= col_min
+
+        col_diff = col_max - col_min
+        row_diff = row_max - row_min
+        # Check if column difference is 1.
+        # That means the top row of the largest shape is not fully filled.
+        # Hence, this naturally means that the largest shape will need to be placed
+        # on the rightmost corner.
+        # That means we will need to shift it to the right
+        if col_diff == 1 and row_diff == 2:
+            cords[:, 1] += 1
+        return cords
+
+    def combine(shape1, shape2):
+        large_shape = shape1 if len(shape1[1]) > len(shape2[1]) else shape2
+        small_shape = shape1 if len(shape1[1]) < len(shape2[1]) else shape2
+        solution = np.zeros((3, 3))
+
+        large_cords = normalise_large(large_shape[1])
+        for row, col in large_cords:
+            # Assign colour to the co-ordinates of the large spaces.
+            solution[row, col] = large_shape[0]
+
+        solution[solution == 0] = small_shape[0]  # Assign colour to remaining places.
+
+        return solution
+
+    x = x.copy()  # Prevents overwriting input array.
+
+    shapes = {}  # Stores shapes with colour as key and co-ordinates as values.
+
+    # Find shapes in grid.
+    for row_idx, row in enumerate(x):
+        # Ignore if row empty.
+        if row.sum() == 0:
+            continue
+        for col_idx in np.where(row != 0)[0]:
+            colour = x[row_idx, col_idx]
+            if colour not in shapes:
+                shapes[colour] = [(row_idx, col_idx)]
+            else:
+                shapes[colour].append((row_idx, col_idx))
+
+    solution = combine(*shapes.items())
+
+    return solution
 
 
 def main():
