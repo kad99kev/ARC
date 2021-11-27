@@ -1,5 +1,21 @@
 # The Abstraction and Reasoning Corpus (ARC)
 
+## Small note on the modifications made
+This repository is part of the MSc AI course at NUI, Galway. While the original intention of the author was to create a benchmark to measure intelligence, the intention here is to convert our problem solving skills and logical thinking into Python code. Hence, the tasks given here are solved through their own individual functions whose code can be found [here](https://github.com/kad99kev/ARC/blob/master/src/manual_solve.py).
+
+The tasks solved are:
+1. c0f76784
+2. ce9e57f2
+3. 1e32b0e9
+4. 5ad4f10b
+5. d43fd935
+6. 681b3aeb
+
+## Issues raised
+When we usually build AI systems, we build it to solve a particular task. If we take the same AI and use it on a different task, it tends to perform poorly. Hence, in order to evaluate the "generality" an AI system we may need to compare its intelligence with that of a human. Taking the code I have written for example, the functions I used to solve one task will not work for the others. However, when I had to solve it mentally, I was able to adapt my logic easily.
+
+---
+
 This repository contains the ARC task data, as well as a browser-based interface for humans to try their hand at solving the tasks manually.
 
 *"ARC can be seen as a general artificial intelligence benchmark, as a program synthesis benchmark, or as a psychometric intelligence test. It is targeted at both humans and artificially intelligent systems that aim at emulating a human-like form of general fluid intelligence."*
