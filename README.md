@@ -12,7 +12,7 @@ The tasks solved are:
 6. 681b3aeb
 
 ## Issues raised
-When we usually build AI systems, we build it to solve a particular task. If we take the same AI and use it on a different task, it tends to perform poorly. Hence, in order to evaluate the "generality" an AI system we may need to compare its intelligence with that of a human. Taking the code I have written for example, the functions I used to solve one task will not work for the others. However, when I had to solve it mentally, I was able to adapt my logic easily.
+When we usually build AI systems, we build it to solve a particular task. If we take the same AI and use it on a different task, it tends to perform poorly. Hence, in order to evaluate the "generality" of an AI system we may need to compare its intelligence with that of a human. Taking the code I have written for example, the functions I used to solve one task will not work for the others. However, when I had to solve it mentally, I was able to adapt my logic easily.
 
 ---
 
